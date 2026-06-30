@@ -36,7 +36,9 @@ app.add_middleware(
 async def chat(chat_data: chat_request):
     def generate():
         for chunk in llmchat.chat_stream(chat_data.user_input):
-            yield f"data: {chunk}\n\n"
+            # 统一换行为 \r，避免 \n 被 SSE 协议当作行分隔符截断
+            safe = chunk.replace('\r\n', '\r').replace('\n', '\r')
+            yield f"data: {safe}\n\n"
 
     return StreamingResponse(generate(), media_type="text/event-stream")
 

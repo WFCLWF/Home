@@ -340,8 +340,30 @@
     /* ===== 快捷链接 ===== */
     .shortcuts {
       display: flex;
-      gap: 16px;
+      gap: 24px;
       margin-top: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .shortcut-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .shortcut-group-title {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.25);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
+    }
+
+    .shortcut-group-items {
+      display: flex;
+      gap: 12px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -391,8 +413,8 @@
 
     /* ===== DeepSeek 聊天面板（右侧栏） ===== */
     .deepseek-section {
-      width: 420px;
-      min-width: 420px;
+      width: 480px;
+      min-width: 480px;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -493,10 +515,10 @@
     }
 
     .chat-msg .msg-bubble {
-      padding: 10px 16px;
+      padding: 8px 14px;
       border-radius: 14px;
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 12px;
+      line-height: 1.45;
       color: var(--text);
       word-break: break-word;
       white-space: pre-wrap;
@@ -541,6 +563,88 @@
       text-align: center;
       padding: 4px;
       border-top: 1px solid var(--border);
+    }
+
+    /* ===== 代码块样式 ===== */
+    .code-block-wrapper {
+      position: relative;
+      margin: 10px 0;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .code-block-wrapper .code-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .code-block-wrapper .code-lang {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .code-block-wrapper .copy-btn {
+      padding: 3px 10px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block-wrapper .copy-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .code-block-wrapper .copy-btn.copied {
+      color: #4ade80;
+      border-color: rgba(74, 222, 128, 0.4);
+      background: rgba(74, 222, 128, 0.1);
+    }
+
+    .code-block-wrapper pre {
+      margin: 0;
+      padding: 14px 16px;
+      overflow-x: auto;
+      font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+      font-size: 11px;
+      line-height: 1.4;
+      color: #e2e8f0;
+      white-space: pre;
+      tab-size: 4;
+    }
+
+    .code-block-wrapper pre::-webkit-scrollbar {
+      height: 3px;
+    }
+
+    .code-block-wrapper pre::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 2px;
+    }
+
+    .inline-code {
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+      font-size: 0.9em;
+      color: #f1c40f;
+      white-space: pre-wrap;
+      word-break: break-all;
     }
 
     /* ===== 页脚 ===== */
@@ -697,48 +801,76 @@
       </div>
     </div>
 
-    <!-- 快捷链接 -->
+    <!-- 快捷链接（按分类存放） -->
     <div class="shortcuts">
-      <a class="shortcut-item" href="https://github.com" title="GitHub">
-        <div class="shortcut-icon" style="background: #333;">🐙</div>
-        <span class="shortcut-name">GitHub</span>
-      </a>
-      <a class="shortcut-item" href="https://www.bilibili.com" title="Bilibili">
-        <div class="shortcut-icon" style="background: #fb7299;">📺</div>
-        <span class="shortcut-name">Bilibili</span>
-      </a>
-      <a class="shortcut-item" href="https://scholar.google.com" title="Google 学术">
-        <div class="shortcut-icon" style="background: #4285f4;">🎓</div>
-        <span class="shortcut-name">学术</span>
-      </a>
-      <a class="shortcut-item" href="https://chat.deepseek.com" title="DeepSeek">
-        <div class="shortcut-icon" style="background: #4d6bfe;">💠</div>
-        <span class="shortcut-name">DeepSeek</span>
-      </a>
-      <a class="shortcut-item" href="https://mail.google.com" title="Gmail">
-        <div class="shortcut-icon" style="background: #ea4335;">✉</div>
-        <span class="shortcut-name">Gmail</span>
-      </a>
-      <a class="shortcut-item" href="https://translate.google.com" title="Google 翻译">
-        <div class="shortcut-icon" style="background: #4285f4;">🌐</div>
-        <span class="shortcut-name">翻译</span>
-      </a>
-      <a class="shortcut-item" href="https://twitter.com" title="Twitter">
-        <div class="shortcut-icon" style="background: #1da1f2;">𝕏</div>
-        <span class="shortcut-name">Twitter</span>
-      </a>
-      <a class="shortcut-item" href="https://blog.puputt.com/" title="Blog">
-        <div class="shortcut-icon" style="background: #ff6b6b;">📝</div>
-        <span class="shortcut-name">Blog</span>
-      </a>
-      <a class="shortcut-item" href="https://v.puputt.com/595117b9#/server/manage" title="Server 管理">
-        <div class="shortcut-icon" style="background: #7c3aed;">🖥️</div>
-        <span class="shortcut-name">服务器</span>
-      </a>
-      <a class="shortcut-item" href="https://v.puputt.com/#/dashboard" title="Dashboard">
-        <div class="shortcut-icon" style="background: #0ea5e9;">📊</div>
-        <span class="shortcut-name">仪表盘</span>
-      </a>
+      <!-- AI & 开发 -->
+      <div class="shortcut-group">
+        <div class="shortcut-group-title">AI & 开发</div>
+        <div class="shortcut-group-items">
+          <a class="shortcut-item" href="https://chat.deepseek.com" title="DeepSeek Chat" data-group="AI & 开发">
+            <div class="shortcut-icon" style="background: #4d6bfe;">💠</div>
+            <span class="shortcut-name">DeepSeek</span>
+          </a>
+          <a class="shortcut-item" href="https://platform.deepseek.com/usage" title="DeepSeek Platform" data-group="AI & 开发">
+            <div class="shortcut-icon" style="background: #6366f1;">📈</div>
+            <span class="shortcut-name">用量</span>
+          </a>
+          <a class="shortcut-item" href="https://github.com" title="GitHub" data-group="AI & 开发">
+            <div class="shortcut-icon" style="background: #333;">🐙</div>
+            <span class="shortcut-name">GitHub</span>
+          </a>
+          <a class="shortcut-item" href="https://blog.puputt.com/" title="Blog" data-group="AI & 开发">
+            <div class="shortcut-icon" style="background: #ff6b6b;">📝</div>
+            <span class="shortcut-name">Blog</span>
+          </a>
+        </div>
+      </div>
+      <!-- 社交 & 媒体 -->
+      <div class="shortcut-group">
+        <div class="shortcut-group-title">社交 & 媒体</div>
+        <div class="shortcut-group-items">
+          <a class="shortcut-item" href="https://www.bilibili.com" title="Bilibili" data-group="社交 & 媒体">
+            <div class="shortcut-icon" style="background: #fb7299;">📺</div>
+            <span class="shortcut-name">Bilibili</span>
+          </a>
+          <a class="shortcut-item" href="https://twitter.com" title="Twitter" data-group="社交 & 媒体">
+            <div class="shortcut-icon" style="background: #1da1f2;">𝕏</div>
+            <span class="shortcut-name">Twitter</span>
+          </a>
+        </div>
+      </div>
+      <!-- 工具 -->
+      <div class="shortcut-group">
+        <div class="shortcut-group-title">工具</div>
+        <div class="shortcut-group-items">
+          <a class="shortcut-item" href="https://scholar.google.com" title="Google 学术" data-group="工具">
+            <div class="shortcut-icon" style="background: #4285f4;">🎓</div>
+            <span class="shortcut-name">学术</span>
+          </a>
+          <a class="shortcut-item" href="https://mail.google.com" title="Gmail" data-group="工具">
+            <div class="shortcut-icon" style="background: #ea4335;">✉</div>
+            <span class="shortcut-name">Gmail</span>
+          </a>
+          <a class="shortcut-item" href="https://translate.google.com" title="Google 翻译" data-group="工具">
+            <div class="shortcut-icon" style="background: #4285f4;">🌐</div>
+            <span class="shortcut-name">翻译</span>
+          </a>
+        </div>
+      </div>
+      <!-- 管理 -->
+      <div class="shortcut-group">
+        <div class="shortcut-group-title">管理</div>
+        <div class="shortcut-group-items">
+          <a class="shortcut-item" href="https://v.puputt.com/595117b9#/server/manage" title="Server 管理" data-group="管理">
+            <div class="shortcut-icon" style="background: #7c3aed;">🖥️</div>
+            <span class="shortcut-name">服务器</span>
+          </a>
+          <a class="shortcut-item" href="https://v.puputt.com/#/dashboard" title="Dashboard" data-group="管理">
+            <div class="shortcut-icon" style="background: #0ea5e9;">📊</div>
+            <span class="shortcut-name">仪表盘</span>
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- 页脚 -->
@@ -980,7 +1112,8 @@
             name: item.querySelector('.shortcut-name').textContent,
             url: item.href,
             icon: item.querySelector('.shortcut-icon').innerHTML,
-            bg: item.querySelector('.shortcut-icon').style.background
+            bg: item.querySelector('.shortcut-icon').style.background,
+            group: item.dataset.group || ''
           });
         });
         localStorage.setItem('homepage-shortcuts', JSON.stringify(shortcuts));
@@ -993,11 +1126,25 @@
           try {
             const shortcuts = JSON.parse(saved);
             const container = document.querySelector('.shortcuts');
-            container.innerHTML = shortcuts.map(s => `
-              <a class="shortcut-item" href="${escapeHtml(s.url)}" title="${escapeHtml(s.name)}">
-                <div class="shortcut-icon" style="background: ${escapeHtml(s.bg || '#333')};">${s.icon}</div>
-                <span class="shortcut-name">${escapeHtml(s.name)}</span>
-              </a>
+            // 按分组归类
+            const groups = {};
+            shortcuts.forEach(s => {
+              const g = s.group || '其他';
+              if (!groups[g]) groups[g] = [];
+              groups[g].push(s);
+            });
+            container.innerHTML = Object.entries(groups).map(([group, items]) => `
+              <div class="shortcut-group">
+                <div class="shortcut-group-title">${escapeHtml(group)}</div>
+                <div class="shortcut-group-items">
+                  ${items.map(s => `
+                    <a class="shortcut-item" href="${escapeHtml(s.url)}" title="${escapeHtml(s.name)}" data-group="${escapeHtml(group)}">
+                      <div class="shortcut-icon" style="background: ${escapeHtml(s.bg || '#333')};">${s.icon}</div>
+                      <span class="shortcut-name">${escapeHtml(s.name)}</span>
+                    </a>
+                  `).join('')}
+                </div>
+              </div>
             `).join('');
 
             // 重新绑定右键
@@ -1029,6 +1176,82 @@
       let isSending = false;
       let chatHistory = []; // 用于上下文记忆
 
+      // 格式化消息内容：解析 Markdown 代码块和行内代码
+      function formatContent(text) {
+        if (!text) return '';
+
+        // 统一换行符（SSE 流中可能混入 \r，导致 <pre> 中无法换行）
+        text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+        const escapeHTML = (s) => s
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+
+        const buildCodeBlock = (code, lang) => {
+          const langLabel = lang || 'code';
+          return `<div class="code-block-wrapper">
+            <div class="code-toolbar">
+              <span class="code-lang">${escapeHTML(langLabel)}</span>
+              <button class="copy-btn">复制</button>
+            </div>
+            <pre><code>${escapeHTML(code)}</code></pre>
+          </div>`;
+        };
+
+        // 简单按 ``` 分割 → 偶数索引=普通文本，奇数索引=代码块内容
+        const parts = text.split(/```/);
+        let result = '';
+
+        for (let i = 0; i < parts.length; i++) {
+          if (i % 2 === 0) {
+            // 普通文本
+            result += processInline(parts[i]);
+          } else {
+            // 代码块：提取首行语言标识符
+            let code = parts[i];
+            let lang = '';
+
+            // 情况1: 语言标签独占一行（```后换行）
+            const nl = code.indexOf('\n');
+            if (nl > 0) {
+              const firstLine = code.substring(0, nl).trim();
+              if (firstLine && /^[a-zA-Z][\w.#+\-]*$/.test(firstLine) && firstLine.length < 16) {
+                lang = firstLine;
+                code = code.substring(nl + 1);
+              }
+            } else if (nl === -1) {
+              // 情况2: 语言标签与代码同行（"python import turtle"）
+              const m = code.match(/^([a-zA-Z][\w.#+\-]{0,15})\s+(.+)/s);
+              if (m) {
+                lang = m[1];
+                code = m[2];
+              }
+            }
+            // nl === 0: ```后紧跟换行，无语言标签，不做处理
+
+            result += buildCodeBlock(code.trimEnd(), lang);
+          }
+        }
+
+        return result;
+
+        // 处理行内代码：按 ` 分割 → 奇数索引为行内代码
+        function processInline(s) {
+          if (!s) return '';
+          const segs = s.split(/`([^`]*)`/);
+          let out = '';
+          for (let j = 0; j < segs.length; j++) {
+            if (j % 2 === 0) {
+              out += escapeHTML(segs[j]).replace(/\n/g, '<br>');
+            } else {
+              out += `<code class="inline-code">${escapeHTML(segs[j])}</code>`;
+            }
+          }
+          return out;
+        }
+      }
+
       // 添加消息到界面
       function addMessage(role, text) {
         if (chatEmpty) chatEmpty.remove();
@@ -1042,7 +1265,7 @@
 
         const bubble = document.createElement('div');
         bubble.className = 'msg-bubble';
-        bubble.textContent = text;
+        bubble.innerHTML = formatContent(text);
 
         msgDiv.appendChild(avatar);
         msgDiv.appendChild(bubble);
@@ -1112,6 +1335,7 @@
           const reader = resp.body.getReader();
           const decoder = new TextDecoder();
           let buffer = '';
+          let fullText = '';
 
           while (true) {
             const { done, value } = await reader.read();
@@ -1124,11 +1348,16 @@
             for (const line of lines) {
               if (line.startsWith('data: ')) {
                 const chunk = line.slice(6);
-                bubble.textContent += chunk;
+                fullText += chunk;
+                bubble.innerHTML = formatContent(fullText);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
               }
             }
           }
+
+          // 最终渲染，确保代码块完整
+          bubble.innerHTML = formatContent(fullText);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
 
           chatStatus.textContent = '就绪';
         } catch (err) {
@@ -1150,6 +1379,41 @@
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
           sendMessage();
+        }
+      });
+
+      // 代码块复制按钮（事件委托）
+      chatMessages.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.copy-btn');
+        if (!btn) return;
+
+        const wrapper = btn.closest('.code-block-wrapper');
+        const code = wrapper.querySelector('code').textContent;
+
+        try {
+          await navigator.clipboard.writeText(code);
+          btn.textContent = '已复制 ✓';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = '复制';
+            btn.classList.remove('copied');
+          }, 1500);
+        } catch {
+          // 降级方案
+          const textarea = document.createElement('textarea');
+          textarea.value = code;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          btn.textContent = '已复制 ✓';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = '复制';
+            btn.classList.remove('copied');
+          }, 1500);
         }
       });
 
