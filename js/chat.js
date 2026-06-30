@@ -205,6 +205,11 @@ async function sendMessage() {
   }
 }
 
+// 聚焦 AI 输入框时显示右侧聊天面板
+chatInput.addEventListener('focus', () => {
+  deepseekSection.classList.add('visible');
+});
+
 // 发送按钮
 chatSendBtn.addEventListener('click', sendMessage);
 

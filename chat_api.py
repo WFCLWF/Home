@@ -22,6 +22,9 @@ class chat_response(pydantic.BaseModel):
 app = FastAPI()
 llmchat = LLMChat()
 
+# 复用 httpx 客户端，避免每次请求重新建立连接
+http_client = httpx.AsyncClient(timeout=5.0)
+
 # 跨域配置
 app.add_middleware(
     CORSMiddleware,
@@ -46,10 +49,9 @@ async def suggest(q: str = Query(..., min_length=1), engine: str = Query(default
     if not url_template:
         return JSONResponse({"error": "unsupported engine"}, status_code=400)
     try:
-        async with httpx.AsyncClient(timeout=5.0) as client:
-            resp = await client.get(url_template.format(query=q))
-            data = resp.json()
-            return JSONResponse(data)
+        resp = await http_client.get(url_template.format(query=q))
+        data = resp.json()
+        return JSONResponse(data)
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=502)
 

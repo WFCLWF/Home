@@ -162,7 +162,7 @@ async function fetchSuggestions(query) {
       // 静默失败
       suggestionsEl.classList.remove('show');
     }
-  }, 200);
+  }, 100);
 }
 
 function escapeHtml(str) {
@@ -181,9 +181,18 @@ document.addEventListener('click', (e) => {
 // ===== 全局快捷键 =====
 // Ctrl+↑ → 聚焦搜索框 / Ctrl+↓ → 聚焦AI输入框
 // Ctrl+← → 上一个搜索引擎 / Ctrl+→ → 下一个搜索引擎
+// 聚焦搜索框时隐藏右侧聊天面板
+searchInput.addEventListener('focus', () => {
+  const panel = document.getElementById('deepseek-section');
+  if (panel) panel.classList.remove('visible');
+});
+
 document.addEventListener('keydown', (e) => {
   if (e.ctrlKey && e.key === 'ArrowUp') {
     e.preventDefault();
+    // 隐藏右侧聊天面板
+    const panel = document.getElementById('deepseek-section');
+    if (panel) panel.classList.remove('visible');
     searchInput.focus();
     searchInput.select();
     // 如果有输入内容则重新打开建议
