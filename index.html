@@ -33,10 +33,20 @@
       color: var(--text);
       min-height: 100vh;
       display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      overflow-x: hidden;
+    }
+
+    /* ===== 主内容区域 ===== */
+    .main-content {
+      flex: 1;
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow-x: hidden;
+      padding: 40px 20px;
+      min-width: 0;
     }
 
     /* ===== 时钟 ===== */
@@ -315,56 +325,39 @@
       white-space: nowrap;
     }
 
-    /* ===== DeepSeek 聊天面板 ===== */
+    /* ===== DeepSeek 聊天面板（右侧栏） ===== */
     .deepseek-section {
-      width: 100%;
-      max-width: 800px;
-      margin: 32px auto 0;
-      border-radius: 16px;
+      width: 420px;
+      min-width: 420px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
       background: var(--card-bg);
       backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
+      border-left: 1px solid var(--border);
       overflow: hidden;
-      transition: all 0.3s ease;
     }
 
     .deepseek-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 14px 20px;
-      cursor: pointer;
-      user-select: none;
-      transition: background 0.2s ease;
+      padding: 16px 20px;
       font-size: 15px;
       font-weight: 500;
       color: var(--text);
-    }
-
-    .deepseek-header:hover {
-      background: var(--card-hover);
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--border);
     }
 
     .deepseek-header .toggle-icon {
-      font-size: 12px;
-      color: var(--text-secondary);
-      transition: transform 0.3s ease;
-    }
-
-    .deepseek-section.open .deepseek-header .toggle-icon {
-      transform: rotate(180deg);
+      display: none;
     }
 
     .deepseek-body {
-      height: 0;
-      overflow: hidden;
-      transition: height 0.35s ease;
+      flex: 1;
       display: flex;
       flex-direction: column;
-    }
-
-    .deepseek-section.open .deepseek-body {
-      height: 480px;
+      overflow: hidden;
     }
 
     /* 消息区域 */
@@ -542,14 +535,33 @@
 
     /* ===== 页脚 ===== */
     .footer {
-      position: fixed;
-      bottom: 20px;
+      margin-top: auto;
+      padding-top: 20px;
       font-size: 12px;
       color: rgba(255, 255, 255, 0.2);
       text-align: center;
     }
 
     /* ===== 响应式 ===== */
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+
+      .main-content {
+        flex: 1;
+        padding: 24px 16px;
+      }
+
+      .deepseek-section {
+        width: 100%;
+        min-width: 100%;
+        height: 420px;
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
+    }
+
     @media (max-width: 600px) {
       .time {
         font-size: 48px;
@@ -595,66 +607,111 @@
       }
 
       .deepseek-section {
-        max-width: 92vw;
-      }
-
-      .deepseek-section.open .deepseek-body {
-        height: 380px;
+        height: 360px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- 时钟 -->
-  <div class="clock-section">
-    <div class="time" id="time">00:00</div>
-    <div class="date" id="date">2026年1月1日 星期四</div>
-  </div>
-
-  <!-- 搜索区域 -->
-  <div class="search-container">
-    <!-- 搜索引擎切换 -->
-    <div class="engine-tabs">
-      <button class="engine-tab active" data-engine="google">Google</button>
-      <button class="engine-tab" data-engine="bing">Bing</button>
-      <button class="engine-tab" data-engine="baidu">百度</button>
-      <button class="engine-tab" data-engine="duckduckgo">DuckDuckGo</button>
+  <!-- 主内容区域 -->
+  <div class="main-content">
+    <!-- 时钟 -->
+    <div class="clock-section">
+      <div class="time" id="time">00:00</div>
+      <div class="date" id="date">2026年1月1日 星期四</div>
     </div>
 
-    <!-- 搜索框 -->
-    <div style="position: relative;">
-      <div class="search-wrapper">
-        <div class="search-inner">
-          <!-- Google 图标 -->
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.35-4.35"/>
-          </svg>
-          <input
-            type="text"
-            id="search-input"
-            placeholder="在 Google 上搜索"
-            autofocus
-            autocomplete="off"
-          >
-          <div class="search-actions">
-            <button class="clear-btn" id="clear-btn" title="清空">✕</button>
-            <button class="search-btn" id="search-btn">搜索</button>
-          </div>
-        </div>
+    <!-- 搜索区域 -->
+    <div class="search-container">
+      <!-- 搜索引擎切换 -->
+      <div class="engine-tabs">
+        <button class="engine-tab active" data-engine="google">Google</button>
+        <button class="engine-tab" data-engine="bing">Bing</button>
+        <button class="engine-tab" data-engine="baidu">百度</button>
+        <button class="engine-tab" data-engine="duckduckgo">DuckDuckGo</button>
       </div>
 
-      <!-- 搜索建议 -->
-      <div class="suggestions" id="suggestions"></div>
+      <!-- 搜索框 -->
+      <div style="position: relative;">
+        <div class="search-wrapper">
+          <div class="search-inner">
+            <!-- Google 图标 -->
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="在 Google 上搜索"
+              autofocus
+              autocomplete="off"
+            >
+            <div class="search-actions">
+              <button class="clear-btn" id="clear-btn" title="清空">✕</button>
+              <button class="search-btn" id="search-btn">搜索</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 搜索建议 -->
+        <div class="suggestions" id="suggestions"></div>
+      </div>
     </div>
+
+    <!-- 快捷链接 -->
+    <div class="shortcuts">
+      <a class="shortcut-item" href="https://github.com" title="GitHub">
+        <div class="shortcut-icon" style="background: #333;">🐙</div>
+        <span class="shortcut-name">GitHub</span>
+      </a>
+      <a class="shortcut-item" href="https://www.bilibili.com" title="Bilibili">
+        <div class="shortcut-icon" style="background: #fb7299;">📺</div>
+        <span class="shortcut-name">Bilibili</span>
+      </a>
+      <a class="shortcut-item" href="https://scholar.google.com" title="Google 学术">
+        <div class="shortcut-icon" style="background: #4285f4;">🎓</div>
+        <span class="shortcut-name">学术</span>
+      </a>
+      <a class="shortcut-item" href="https://chat.deepseek.com" title="DeepSeek">
+        <div class="shortcut-icon" style="background: #4d6bfe;">💠</div>
+        <span class="shortcut-name">DeepSeek</span>
+      </a>
+      <a class="shortcut-item" href="https://mail.google.com" title="Gmail">
+        <div class="shortcut-icon" style="background: #ea4335;">✉</div>
+        <span class="shortcut-name">Gmail</span>
+      </a>
+      <a class="shortcut-item" href="https://translate.google.com" title="Google 翻译">
+        <div class="shortcut-icon" style="background: #4285f4;">🌐</div>
+        <span class="shortcut-name">翻译</span>
+      </a>
+      <a class="shortcut-item" href="https://twitter.com" title="Twitter">
+        <div class="shortcut-icon" style="background: #1da1f2;">𝕏</div>
+        <span class="shortcut-name">Twitter</span>
+      </a>
+      <a class="shortcut-item" href="https://blog.puputt.com/" title="Blog">
+        <div class="shortcut-icon" style="background: #ff6b6b;">📝</div>
+        <span class="shortcut-name">Blog</span>
+      </a>
+      <a class="shortcut-item" href="https://v.puputt.com/595117b9#/server/manage" title="Server 管理">
+        <div class="shortcut-icon" style="background: #7c3aed;">🖥️</div>
+        <span class="shortcut-name">服务器</span>
+      </a>
+      <a class="shortcut-item" href="https://v.puputt.com/#/dashboard" title="Dashboard">
+        <div class="shortcut-icon" style="background: #0ea5e9;">📊</div>
+        <span class="shortcut-name">仪表盘</span>
+      </a>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer">按下 Enter 快速搜索 · Google 默认搜索引擎</div>
   </div>
 
-  <!-- DeepSeek AI 聊天 -->
+  <!-- DeepSeek AI 聊天（右侧栏） -->
   <div class="deepseek-section" id="deepseek-section">
-    <div class="deepseek-header" id="deepseek-toggle">
-      <span>💠 DeepSeek AI 助手</span>
-      <span class="toggle-icon">▼</span>
+    <div class="deepseek-header">
+      <span>💠 AI 助手</span>
     </div>
     <div class="deepseek-body">
       <div class="chat-messages" id="chat-messages">
@@ -672,53 +729,6 @@
       </div>
     </div>
   </div>
-
-  <!-- 快捷链接 -->
-  <div class="shortcuts">
-    <a class="shortcut-item" href="https://github.com" title="GitHub">
-      <div class="shortcut-icon" style="background: #333;">🐙</div>
-      <span class="shortcut-name">GitHub</span>
-    </a>
-    <a class="shortcut-item" href="https://www.bilibili.com" title="Bilibili">
-      <div class="shortcut-icon" style="background: #fb7299;">📺</div>
-      <span class="shortcut-name">Bilibili</span>
-    </a>
-    <a class="shortcut-item" href="https://scholar.google.com" title="Google 学术">
-      <div class="shortcut-icon" style="background: #4285f4;">🎓</div>
-      <span class="shortcut-name">学术</span>
-    </a>
-    <a class="shortcut-item" href="https://chat.deepseek.com" title="DeepSeek">
-      <div class="shortcut-icon" style="background: #4d6bfe;">💠</div>
-      <span class="shortcut-name">DeepSeek</span>
-    </a>
-    <a class="shortcut-item" href="https://mail.google.com" title="Gmail">
-      <div class="shortcut-icon" style="background: #ea4335;">✉</div>
-      <span class="shortcut-name">Gmail</span>
-    </a>
-    <a class="shortcut-item" href="https://translate.google.com" title="Google 翻译">
-      <div class="shortcut-icon" style="background: #4285f4;">🌐</div>
-      <span class="shortcut-name">翻译</span>
-    </a>
-    <a class="shortcut-item" href="https://twitter.com" title="Twitter">
-      <div class="shortcut-icon" style="background: #1da1f2;">𝕏</div>
-      <span class="shortcut-name">Twitter</span>
-    </a>
-    <a class="shortcut-item" href="https://blog.puputt.com/" title="Blog">
-      <div class="shortcut-icon" style="background: #ff6b6b;">📝</div>
-      <span class="shortcut-name">Blog</span>
-    </a>
-    <a class="shortcut-item" href="https://v.puputt.com/595117b9#/server/manage" title="Server 管理">
-      <div class="shortcut-icon" style="background: #7c3aed;">🖥️</div>
-      <span class="shortcut-name">服务器</span>
-    </a>
-    <a class="shortcut-item" href="https://v.puputt.com/#/dashboard" title="Dashboard">
-      <div class="shortcut-icon" style="background: #0ea5e9;">📊</div>
-      <span class="shortcut-name">仪表盘</span>
-    </a>
-  </div>
-
-  <!-- 页脚 -->
-  <div class="footer">按下 Enter 快速搜索 · Google 默认搜索引擎</div>
 
   <script>
     (function() {
@@ -981,7 +991,6 @@
 
       // ===== DeepSeek 聊天面板 =====
       const deepseekSection = document.getElementById('deepseek-section');
-      const deepseekToggle = document.getElementById('deepseek-toggle');
       const chatMessages = document.getElementById('chat-messages');
       const chatInput = document.getElementById('chat-input');
       const chatSendBtn = document.getElementById('chat-send-btn');
@@ -991,20 +1000,6 @@
       const API_URL = 'http://127.0.0.1:8000/api/chat';
       let isSending = false;
       let chatHistory = []; // 用于上下文记忆
-
-      // 面板折叠
-      const deepseekExpanded = localStorage.getItem('deepseek-panel-open') === 'true';
-      if (deepseekExpanded) {
-        deepseekSection.classList.add('open');
-      }
-
-      deepseekToggle.addEventListener('click', () => {
-        deepseekSection.classList.toggle('open');
-        localStorage.setItem('deepseek-panel-open', deepseekSection.classList.contains('open'));
-        if (deepseekSection.classList.contains('open')) {
-          chatInput.focus();
-        }
-      });
 
       // 添加消息到界面
       function addMessage(role, text) {
@@ -1130,12 +1125,6 @@
         }
       });
 
-      // 点击面板标题时聚焦输入框
-      deepseekToggle.addEventListener('click', () => {
-        if (deepseekSection.classList.contains('open')) {
-          setTimeout(() => chatInput.focus(), 350);
-        }
-      });
     })();
   </script>
 </body>

@@ -1,23 +1,77 @@
 # Home
 
-现代化浏览器首页，默认搜索引擎为 **Google**。
+现代化浏览器首页，集成 **AI 助手**、多引擎搜索与常用快捷方式。
 
 ## 功能
 
-- 🔍 **多引擎搜索** — 支持 Google、Bing、百度、DuckDuckGo 四种搜索引擎，Google 为默认
-- 🕐 **实时时钟** — 显示当前时间和日期
-- 💡 **搜索建议** — Google 和百度支持输入时的搜索建议
-- 🔗 **快捷链接** — 预设 GitHub、YouTube、Gmail 等常用网站
-- 🎨 **深色主题** — 暗色背景配合毛玻璃搜索框，观感舒适
-- 📱 **响应式设计** — 适配桌面与移动端
-- 💾 **本地存储** — 引擎选择和快捷方式修改自动保存到本地
+- 🔍 **多引擎搜索** — 支持 Google、Bing、百度、DuckDuckGo，默认 Google
+- 💠 **AI 助手** — 右侧栏内嵌 DeepSeek 对话面板，支持流式响应
+- 🕐 **实时时钟** — 显示当前时间与日期
+- 💡 **搜索建议** — Google 和百度输入时自动补全
+- 🔗 **快捷链接** — 预设 GitHub、Bilibili、Gmail 等常用网站，右键可编辑
+- 🎨 **深色主题** — 暗色背景 + 毛玻璃效果
+- 📱 **响应式设计** — 宽屏侧栏布局，窄屏自动切换为上下布局
+- 💾 **本地存储** — 搜索引擎选择、快捷方式、聊天记录自动保存
 
-## 使用
+## 项目结构
 
-1. 用浏览器打开 `index.html`
-2. 将浏览器主页设置为该文件路径（或部署后使用网址）
-3. 在搜索框输入内容，按 Enter 或点击搜索按钮使用 Google 搜索
+```
+Home/
+├── index.html       # 前端页面（搜索 + AI 侧栏）
+├── chat_api.py      # FastAPI 后端入口
+├── llm_chat.py      # DeepSeek 对话封装
+├── index2.html      # 备用页面（无 AI 面板）
+└── .gitignore
+```
 
-### 快捷方式右键
+## 快速开始
 
-右键点击任意快捷方式可修改其链接地址，修改自动保存。
+### 1. 前端
+
+直接用浏览器打开 `index.html`，所有功能开箱即用。
+
+若想设为浏览器主页，将 `index.html` 的完整路径填入浏览器启动页设置即可。
+
+### 2. 后端（AI 对话）
+
+AI 聊天功能需要本地运行后端服务：
+
+```bash
+# 安装依赖
+pip install fastapi uvicorn openai pydantic
+
+# 启动服务
+python chat_api.py
+```
+
+服务默认运行在 `http://127.0.0.1:8000`，前端自动连接该地址。
+
+### 3. 配置 API Key
+
+在 [llm_chat.py](llm_chat.py) 中修改 `api_key`、`base_url` 和 `model` 为你自己的 API 配置。
+
+## API
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| POST | `/api/chat` | 发送消息，返回 SSE 流式响应 |
+
+**请求体：**
+
+```json
+{ "user_input": "你好" }
+```
+
+**响应：** `text/event-stream` 格式，逐块返回 AI 回复：
+
+```
+data: 你好
+data: ！有
+data: 什么可以帮你的？
+```
+
+## 技术栈
+
+- **前端** — 原生 HTML / CSS / JavaScript，无框架依赖
+- **后端** — Python FastAPI + OpenAI SDK（兼容 DeepSeek API）
+- **AI 模型** — DeepSeek V4 Flash（可替换为任意 OpenAI 兼容接口）
