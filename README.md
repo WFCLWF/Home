@@ -11,16 +11,29 @@
 - 🔗 **快捷链接** — 预设 GitHub、Bilibili、Gmail 等常用网站，右键可编辑
 - 🎨 **深色主题** — 暗色背景 + 毛玻璃效果
 - 📱 **响应式设计** — 宽屏侧栏布局，窄屏自动切换为上下布局
+- ⌨️ **键盘快捷键** — Ctrl+↑↓ 切换搜索框/AI输入框，Ctrl+←→ 切换搜索引擎
 - 💾 **本地存储** — 搜索引擎选择、快捷方式、聊天记录自动保存
+
+### 快捷键
+
+| 快捷键 | 操作 |
+|--------|------|
+| `Ctrl + ↑` | 聚焦搜索框 |
+| `Ctrl + ↓` | 聚焦 AI 输入框 |
+| `Ctrl + ←` | 上一个搜索引擎 |
+| `Ctrl + →` | 下一个搜索引擎 |
+| `Enter` | 搜索框：执行搜索 / AI输入框：发送消息 |
 
 ## 项目结构
 
 ```
 Home/
-├── index.html       # 前端页面（搜索 + AI 侧栏）
-├── chat_api.py      # FastAPI 后端入口
-├── llm_chat.py      # DeepSeek 对话封装
-├── index2.html      # 备用页面（无 AI 面板）
+├── index.html          # 前端页面（搜索 + AI 聊天）
+├── chat_api.py         # FastAPI 后端入口
+├── llm_chat.py         # DeepSeek 对话封装
+├── setup_autostart.bat # 开机自启配置脚本
+├── start_chat_api.vbs  # 无窗口后台启动
+├── stop_chat_api.bat   # 停止后台服务
 └── .gitignore
 ```
 

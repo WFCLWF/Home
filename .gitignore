@@ -1,1 +1,4 @@
 llm_chat.py
+chat_api_startup.log"
+.vscode
+__pycache__
